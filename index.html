@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoulData - Herança Digital</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app-container">
+
+        <section id="page-login" class="page active">
+            <div class="login-box">
+                <img src="/IMG/imglogo2.png" alt="SoulData Logo" class="logo-img-large">
+                <h2>Login</h2>
+                <div id="login-alert" class="alert hidden"></div>
+                <form id="form-login" novalidate>
+                    <input type="email" id="login-email" placeholder="E-mail" required>
+                    <div class="input-group">
+                        <input type="password" id="login-password" placeholder="Senha" required>
+                        <button type="button" class="eye-btn" onclick="toggleSenha('login-password', this)">👁</button>
+                    </div>
+                    <div id="login-pw-error" class="field-error hidden"></div>
+                    <button type="submit" class="btn-primary">Entrar no App</button>
+                </form>
+                <p class="auth-toggle">Não tem uma conta? <a href="#" id="link-ir-registro">Cadastrar-se</a></p>
+            </div>
+        </section>
+
+        <section id="page-registro" class="page">
+            <div class="login-box">
+                <img src="/IMG/imglogo2.png" alt="SoulData Logo" class="logo-img-large">
+                <h2>Criar Conta</h2>
+                <form id="form-registro" novalidate>
+                    <input type="text" id="reg-nome" placeholder="Nome Completo" required>
+                    <input type="email" id="reg-email" placeholder="E-mail" required>
+
+                    <!-- SENHA COM VALIDAÇÕES -->
+                    <div class="input-group">
+                        <input type="password" id="reg-senha" placeholder="Senha (mín. 8 caracteres)" oninput="validarSenha()" required>
+                        <button type="button" class="eye-btn" onclick="toggleSenha('reg-senha', this)">👁</button>
+                    </div>
+
+    
+                    <div class="strength-wrap">
+                        <div class="strength-bars">
+                            <div class="strength-bar" id="sb1"></div>
+                            <div class="strength-bar" id="sb2"></div>
+                            <div class="strength-bar" id="sb3"></div>
+                            <div class="strength-bar" id="sb4"></div>
+                        </div>
+                    <div class="input-group">
+                        <input type="password" id="reg-confirmar" placeholder="Confirmar Senha" oninput="verificarConfirmacao()" required>
+                        <button type="button" class="eye-btn" onclick="toggleSenha('reg-confirmar', this)">👁</button>
+                    </div>
+                    <div id="confirm-msg" class="field-error hidden"></div>
+
+                    <button type="submit" id="btn-registrar" class="btn-primary" disabled>Criar Cadastro</button>
+                </form>
+                <p class="auth-toggle">Já tem conta? <a href="#" id="link-voltar-login">Fazer Login</a></p>
+            </div>
+        </section>
+
+        <header class="app-header hidden" id="main-header">
+            <div class="container">
+                <img src="/IMG/imglogo2.png" alt="SoulData Logo" class="logo-img-small">
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="#" id="link-home">Início</a></li>
+                        <li><a href="#" id="link-cadastro">Cadastrar</a></li>
+                        <li><a href="#" id="link-cofre">Cofre</a></li>
+                        <li><a href="#" id="link-planos">Planos</a></li>
+                        <li><a href="#" id="link-logout" class="logout-link">Sair</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <main class="hidden" id="main-content">
+            <div class="container">
+
+
+                <section id="page-home" class="page">
+                    <div class="hero">
+                        <h2>Digital Legacy Secured</h2>
+                        <p>Sua herança digital protegida e organizada para o futuro.</p>
+                        <div id="user-plan-badge"></div>
+                        <button id="btn-start" class="btn-primary" style="margin-top:20px">Proteger Novo Ativo</button>
+                    </div>
+                </section>
+
+
+                <section id="page-cadastro" class="page">
+                    <div class="form-wrapper">
+                        <h2>Cadastrar Ativo</h2>
+                        <div id="cadastro-bloqueio" class="hidden">
+                            <div class="plano-aviso">
+                                <span class="lock-icon"></span>
+                                <h3>Limite do plano Básico atingido</h3>
+                                <p>Você atingiu o limite de <strong>3 ativos</strong> do plano Básico.<br>Faça upgrade para o Premium e proteja ativos ilimitados.</p>
+                                <button class="btn-primary" onclick="navegar(pagePlanos)">Ver Plano Premium</button>
+                            </div>
+                        </div>
+                        <form id="form-ativo">
+                            <label>Titular</label>
+                            <input type="text" id="titular" placeholder="Nome Completo" required>
+
+                            <label>Tipo de Ativo</label>
+                            <select id="tipoAtivo" required>
+                                <option value="">Selecione</option>
+                                <option value="crypto">Criptomoeda</option>
+                                <option value="redesocial">Rede Social</option>
+                                <option value="banco">Banco Digital</option>
+                                <option value="documentos">Cofre de Documentos</option>
+                            </select>
+
+                            <label>Login, Link ou Identificação</label>
+                            <input type="text" id="identificacao" placeholder="Usuário ou URL" required>
+
+                            <div id="container-senha" class="hidden">
+                                <label id="label-senha">Senha do Ativo</label>
+                                <div class="input-group">
+                                    <input type="password" id="senhaAtivo" placeholder="Senha protegida">
+                                    <button type="button" class="eye-btn" onclick="toggleSenha('senhaAtivo', this)">👁</button>
+                                </div>
+                            </div>
+
+                            <label>E-mail do Herdeiro</label>
+                            <input type="email" id="emailHerdeiro" required>
+
+                            <label>Tempo de Inatividade</label>
+                            <select id="tempoInatividade" required>
+                                <option value="Selecione">Selecione</option>
+                                <option value="3 Meses">3 Meses</option>
+                                <option value="6 Meses">6 Meses</option>
+                                <option value="1 Ano">1 Ano</option>
+                            </select>
+
+                            <button type="submit" class="btn-primary">Guardar no Cofre</button>
+                        </form>
+                    </div>
+                </section>
+
+
+                <section id="page-cofre" class="page">
+                    <h2>Meu Cofre</h2>
+                    <div id="cofre-bloqueio" class="hidden">
+                        <div class="plano-aviso premium-only">
+                            <span class="lock-icon"></span>
+                            <h3>Cofre Premium</h3>
+                            <p>Visualização avançada do cofre é exclusiva do plano <strong>Premium</strong>.<br>No Básico você pode ver apenas os últimos 3 ativos cadastrados.</p>
+                            <button class="btn-primary" onclick="navegar(pagePlanos)">Fazer Upgrade</button>
+                        </div>
+                    </div>
+                    <div id="lista-ativos" class="ativos-grid"></div>
+                </section>
+
+
+                <section id="page-planos" class="page">
+                    <h2>Planos</h2>
+                    <p style="text-align:center; color:#a0aec0; margin-bottom:30px">Escolha o plano ideal para proteger sua herança digital.</p>
+                    <div class="planos-grid">
+
+                        <div class="plan-card" id="card-basico">
+                            <h3>Básico</h3>
+                            <p class="price">R$ 15,80<span>/mês</span></p>
+                            <ul class="plan-features">
+                                <li class="yes">✔ Até 3 ativos digitais</li>
+                                <li class="yes">✔ Criptografia SHA-256 nas senhas</li>
+                                <li class="yes">✔ 1 herdeiro por ativo</li>
+                                <li class="yes">✔ Gatilho por inatividade</li>
+                                <li class="yes">✔ Suporte por e-mail</li>
+                                <li class="no">✘ Ativos ilimitados</li>
+                                <li class="no">✘ Múltiplos herdeiros</li>
+                                <li class="no">✘ Cofre avançado com busca</li>
+                                <li class="no">✘ Criptografia AES-256 avançada</li>
+                                <li class="no">✘ Suporte prioritário 24/7</li>
+                                <li class="no">✘ Relatórios e histórico completo</li>
+                                <li class="no">✘ Backup automático na nuvem</li>
+                            </ul>
+                            <button class="btn-primary btn-plano" onclick="escolherPlano('basico')">Assinar Básico</button>
+                        </div>
+
+                        <div class="plan-card premium" id="card-premium">
+                            <div class="badge-popular"> Mais Popular</div>
+                            <h3>Premium</h3>
+                            <p class="price">R$ 59,90<span>/mês</span></p>
+                            <ul class="plan-features">
+                                <li class="yes">✔ Ativos digitais ilimitados</li>
+                                <li class="yes">✔ Criptografia AES-256 avançada</li>
+                                <li class="yes">✔ Múltiplos herdeiros por ativo</li>
+                                <li class="yes">✔ Gatilho por inatividade</li>
+                                <li class="yes">✔ Suporte prioritário 24/7</li>
+                                <li class="yes">✔ Cofre avançado com busca</li>
+                                <li class="yes">✔ Relatórios e histórico completo</li>
+                                <li class="yes">✔ Backup automático na nuvem</li>
+                                <li class="yes">✔ Alertas por e-mail e SMS</li>
+                                <li class="yes">✔ API de integração</li>
+                                <li class="yes">✔ Dashboard analítico</li>
+                                <li class="yes">✔ Exportação segura de dados</li>
+                            </ul>
+                            <button class="btn-primary btn-plano" onclick="escolherPlano('premium')">Assinar Premium</button>
+                        </div>
+
+                    </div>
+                </section>
+
+            </div>
+        </main>
+
+
+        <div id="modalSucesso" class="modal">
+            <div class="modal-content">
+                <h2> Cofre Salvo</h2>
+                <p>O ativo foi <strong>criptografado</strong> e salvo com segurança.</p>
+                <button id="btnFecharModal" class="btn-primary">Ver meu Cofre</button>
+            </div>
+        </div>
+
+
+        <div id="modalUpgrade" class="modal">
+            <div class="modal-content">
+                <h2> Recurso Premium</h2>
+                <p id="modalUpgradeMsg">Este recurso é exclusivo do plano Premium.</p>
+                <div style="display:flex;gap:10px;justify-content:center;margin-top:15px">
+                    <button class="btn-secondary" onclick="fecharModalUpgrade()">Agora não</button>
+                    <button class="btn-primary" onclick="irParaPlanos()">Ver Planos</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
